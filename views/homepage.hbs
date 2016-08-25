@@ -1,0 +1,143 @@
+<!--
+
+    Copyright (c) 2008-present Sonatype, Inc.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+
+<!doctype html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{name}}</title>
+    <link rel="shortcut icon" href="//cdn2.hubspot.net/hubfs/1958393/Backgrounds/favicon.ico">
+    <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.9.6/css/aui.min.css" media="all">
+    <link rel="stylesheet" href="{{furl '/css/homepage.css'}}">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//aui-cdn.atlassian.com/aui-adg/5.9.6/js/aui.min.js"></script>
+  </head>
+
+  <body id="aui-flatpack" class="aui-page-fixed">
+    <section id="content" role="main">
+      <header class="aui-page-header">
+        <div class="aui-page-header-inner">
+          <div class="aui-page-header-main intro-header">
+            <div class="aui-group">
+              <div class="aui-item addon-logo">
+                <img src="./img/logo.png" alt="{{name}}">
+
+                <div>
+                  <a href="https://www.hipchat.com/addons/install?url={{links.self}}" class="aui-button aui-button-primary"
+                     title="Install Nexus for HipChat"><span
+                      class="aui-icon aui-icon-small aui-iconfont-hipchat"></span>
+                    Add to HipChat</a>
+                </div>
+              </div>
+              <div class="aui-item">
+                <h1>
+                  {{name}}
+                  <small class="vendor">By <a href="{{vendor.url}}">{{vendor.name}}</a></small>
+                </h1>
+                <p class="subtitle">
+                  {{description}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="aui-page-panel addon-intro-page">
+        <div class="aui-page-panel-inner">
+          <section class="aui-page-panel-item">
+            <div class="aui-group">
+              <div class="aui-item">
+                <h2>Description</h2>
+                <p>
+                  Nexus for HipChat consumes Webhooks from Nexus 3 Repository Manager and creates HipChat notifications
+                  from their content. It currently supports Created events for both Asset and Component Repository
+                  Webhooks. It can be used in hosted repositories to monitor which artifacts are being published;
+                  allowing a team to monitor the components they are working on. For proxy repositories, the Nexus
+                  Notifier can provide insight as to which new components are being cached into the Repository
+                  Manager.
+                </p>
+              </div>
+            </div>
+            <div class="aui-group">
+              <div class="aui-item">
+                <h2>Configuration</h2>
+                <p>
+                  To utilize the Notifier, you must have a running instance of Nexus 3 Repository Manager. Webhooks
+                  can be enabled using
+                  <a class="aui-button-link"
+                     href="//books.sonatype.com/nexus-book/3.0/reference/admin.html#admin-system-capabilities">
+                    Nexus Capabilities
+                  </a>
+                  and enabling the Webhook: Repository Capability. Configure the URL to point to <code>{{links.homepage}}/nexus</code>
+                  and set a Secret Key to ensure that the Webhooks received in Nexus for HipChat originated from your
+                  Nexus instance.
+                </p>
+                <h3>Nexus Capability Configuration</h3>
+                <img src="./img/nexus-capability.png" alt="Capability Configuration">
+                <p>
+                  Once Nexus has been configured,
+                  <a class="aui-button-link"
+                     href="https://www.hipchat.com/addons/install?url={{links.self}}">
+                    install
+                  </a>
+                  Nexus for HipChat. In order to configure Nexus for HipChat you need to determine the Node ID of
+                  your Nexus server. This is available in the Node: Identify capability settings, under Description
+                  and Node ID.
+                </p>
+                <h3>Nexus Node: Identity</h3>
+                <img src="./img/nexus-node-id.png" alt="Nexus Node ID">
+                <p>
+                  Fill out the Nexus Node ID and Secret Key from the previous steps. A Regex Filter can be used to
+                  filter the notifications by the component or asset which triggered the event.
+                </p>
+              </div>
+            </div>
+            <div class="aui-group">
+              <div class="aui-item">
+                <h2>Contributing</h2>
+                The source code for this addon is kept on GitHub at
+                <a class="aui-button-link"
+                   href="//github.com/sonatype/nexus-hipchat-notifier">
+                  sonatype/nexus-hipchat-notifier
+                </a>. It is licensed under Apache License, Version 2.0 and contributions are welcome through forks
+                and pull requests. Code should be formatted according to the Sonatype Code Styles available at
+                <a class="aui-button-link"
+                   href="//github.com/sonatype/codestyle">
+                  sonatype/codestyle
+                </a>.
+              </div>
+            </div>
+          </section>
+        </div>
+        <footer id="footer" role="contentinfo">
+          <section class="footer-body">
+            <ul id="aui-footer-list">
+              <li><a href="https://hipchat.com">HipChat</a></li>
+              <li><a href="https://developer.atlassian.com/hipchat">Developers</a></li>
+              <li>Copyright © 2016 Atlassian</li>
+            </ul>
+            <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+          </section>
+        </footer>
+      </div>
+    </section>
+  </body>
+
+</html>

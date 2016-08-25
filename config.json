@@ -1,0 +1,29 @@
+{
+  "development": {
+    "localBaseUrl": "https://some-hash.ngrok.io",
+
+    "usePublicKey": false,
+    "watch": false,
+    "port": 3000,
+    "maxTokenAge": 86400,
+
+    "store": {
+      "adapter": "redis",
+      "url": "redis://localhost:6379"
+    }
+  },
+
+  // Enabled when NODE_ENV=production
+  "production": {
+    "usePublicKey": false,
+    "port": "$PORT",
+    "localBaseUrl": "https://your-subdomain.herokuapp.com",
+    "store": {
+      "adapter": "redis",
+      "url": "$REDIS_URL"
+    },
+    "whitelist": [
+      "*.hipchat.com"
+    ]
+  }
+}

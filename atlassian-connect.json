@@ -1,0 +1,30 @@
+{
+  "key": "nexus-hipchat-notifier",
+  "name": "Nexus for HipChat",
+  "description": "A notifier service to provide HipChat messages when components and assets are cached in Nexus Repository Manager.",
+  "vendor": {
+    "name": "Sonatype",
+    "url": "https://www.sonatype.com"
+  },
+  "links": {
+    "self": "{{localBaseUrl}}/atlassian-connect.json",
+    "homepage": "{{localBaseUrl}}"
+  },
+  "capabilities": {
+    "hipchatApiConsumer": {
+      "scopes": [
+        "send_notification"
+      ],
+      "avatar": {
+        "url": "{{localBaseUrl}}/img/logo.png",
+        "url@2x": "{{localBaseUrl}}/img/logo.png"
+      }
+    },
+    "installable": {
+      "callbackUrl": "{{localBaseUrl}}/installable"
+    },
+    "configurable": {
+      "url": "{{localBaseUrl}}/config"
+    }
+  }
+}

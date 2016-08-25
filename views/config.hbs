@@ -1,0 +1,58 @@
+<!--
+
+    Copyright (c) 2008-present Sonatype, Inc.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+
+{{!< layout}}
+<form class="aui">
+  <div class="field-group">
+    <label for="node-id">Nexus Node ID<span class="aui-icon icon-required">required</span></label>
+    <input class="text" type="text" id="node-id" name="node-id" title="Node ID" value="{{nodeId}}">
+    <div class="description">Nexus Node ID available via the Node: Identity Nexus capability</div>
+  </div>
+  <div class="field-group">
+    <label for="secret-key">Secret Key</label>
+    <input class="text" type="password" id="secret-key" name="secret-key" title="Secret Key" value="{{secretKey}}">
+    <div class="description">Nexus Webhook Secret Key configurable through the Webhook capability</div>
+  </div>
+  <div class="field-group">
+    <label for="regex-filter">Regex Filter</label>
+    <input class="text" type="password" id="regex-filter" name="regex-filter" title="Regex Filter" value="{{regexFilter}}">
+    <div class="description">A regex filter to select which components or assets trigger a notification</div>
+  </div>
+  <div class="buttons-container">
+    <div class="buttons">
+      <input class="button submit" type="button" value="Save" id="save-configuration">
+    </div>
+  </div>
+  <script>
+    $('#save-configuration').on('click', function() {
+      HipChat.auth.withToken(function(err, token) {
+        $.ajax({
+          type: 'POST',
+          url: '/config',
+          headers: {'authorization': 'JWT ' + token},
+          data: {
+            nodeId: $('#node-id').val(),
+            secretKey: $('#secret-key').val(),
+            regexFilter: $('#regex-filter').val()
+          },
+          dataType: 'json'
+        });
+      });
+    });
+  </script>
+</form>

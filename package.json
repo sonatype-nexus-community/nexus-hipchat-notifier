@@ -1,0 +1,32 @@
+{
+  "name": "nexus-hipchat-addon",
+  "version": "1.0.0",
+  "description": "An Atlassian Connect Express server to listen to Nexus 3 Repository Manager webhooks and send them to HipChat.",
+  "license": "SEE LICENSE IN LICENSE",
+  "scripts": {
+    "start": "node app.js",
+    "test": "./node_modules/.bin/mocha ./test/"
+  },
+  "dependencies": {
+    "atlassian-connect-express": "^1.0.10",
+    "atlassian-connect-express-hipchat": "^0.3.5",
+    "atlassian-connect-express-redis": "^0.1.6",
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "cors": "^2.7.1",
+    "errorhandler": "^1.4.3",
+    "express": "^4.14.0",
+    "express-hbs": "^1.0.1",
+    "lodash": "^4.13.1",
+    "morgan": "^1.7.0",
+    "request": "^2.72.0",
+    "rsvp": "^3.2.1",
+    "static-expiry": "^0.0.11",
+    "uuid": "^2.0.2"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2",
+    "sinon": "^1.17.5"
+  }
+}
