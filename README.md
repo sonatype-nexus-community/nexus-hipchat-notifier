@@ -12,14 +12,14 @@ cached into the Repository Manager.
 
 To utilize the Notifier, you must have a running instance of Nexus 3 Repository Manager. Webhooks can be enabled using
 [Nexus Capabilities](//books.sonatype.com/nexus-book/3.0/reference/admin.html#admin-system-capabilities) and enabling
-the Webhook: Repository Capability. Configure the URL to point to `https://deployed-location.com/nexus` and set a
-Secret Key to ensure that the Webhooks received in the Nexus for HipChat originated from your Nexus instance.
+the Webhook: Repository Capability. Configure the URL to point to `https://nexus-hipchat-notifier.herokuapp.com/nexus`
+and set a Secret Key to ensure that the Webhooks received in the Nexus for HipChat originated from your Nexus instance.
 
 ### Nexus Capability Configuration
 
 ![Capability Configuration](./public/img/nexus-capability.png)
 
-Once Nexus has been configured, [install](https://www.hipchat.com/addons/install?url=https://deployed-location.com/atlassian-connect.json)
+Once Nexus has been configured, [install](https://www.hipchat.com/addons/install?url=https://nexus-hipchat-notifier.herokuapp.com/atlassian-connect.json)
 Nexus for HipChat. In order to configure Nexus for HipChat you need to determine the Node ID of your Nexus server.
 This is available in the Node: Identify capability settings, under Description and Node ID.
 

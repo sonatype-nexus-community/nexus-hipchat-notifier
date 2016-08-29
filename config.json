@@ -17,7 +17,7 @@
   "production": {
     "usePublicKey": false,
     "port": "$PORT",
-    "localBaseUrl": "https://your-subdomain.herokuapp.com",
+    "localBaseUrl": "https://nexus-hipchat-notifier.herokuapp.com",
     "store": {
       "adapter": "redis",
       "url": "$REDIS_URL"
