@@ -140,7 +140,8 @@ module.exports = function(app, addon) {
           const clientKey = settings.clientKey;
           addon.loadClientInfo(clientKey).then(function(clientInfo) {
             // Send rendered HipChat card
-            hipchat.sendMessage(clientInfo, settings.roomId, card.description, {}, card).then(function(data) {
+            hipchat.sendMessage(clientInfo, settings.roomId, card.description + ':' + card.title, {}, card).then(
+                function(data) {
               res.sendStatus(200);
             });
           });

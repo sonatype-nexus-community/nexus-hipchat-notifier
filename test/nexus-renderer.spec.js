@@ -240,6 +240,7 @@ describe('nexus-renderer', function() {
       repositoryName: 'repository',
       asset: {
         id: 'id',
+        format: 'maven2',
         name: 'asset-name'
       }
     });
@@ -250,8 +251,22 @@ describe('nexus-renderer', function() {
     expect(card.format).to.equal('medium');
     expect(card.title).to.equal('asset-name');
     expect(card.url).to.equal('http://foo.com/#browse/browse/assets:repository:id');
-    expect(card.description).to.equal('asset-name asset cached in repository');
+    expect(card.description).to.equal('New asset cached in Nexus Repository Manager');
     expect(card.icon.url).to.equal('http://foo.com/static/rapture/resources/icons/x32/page_white_stack.png');
+    expect(card.attributes).to.deep.equal([
+      {
+        "label": "Format",
+        "value": {
+          "label": "maven2"
+        }
+      },
+      {
+        "label": "Repository",
+        "value": {
+          "label": "repository"
+        }
+      }
+    ]);
   });
 
   it('buildCard() should correctly build component cards', function() {
@@ -275,7 +290,21 @@ describe('nexus-renderer', function() {
     expect(card.format).to.equal('medium');
     expect(card.title).to.equal('group:artifact:version');
     expect(card.url).to.equal('http://foo.com/#browse/browse/components:repository:id');
-    expect(card.description).to.equal('group:artifact:version component cached in repository');
+    expect(card.description).to.equal('New component cached in Nexus Repository Manager');
     expect(card.icon.url).to.equal('http://foo.com/static/rapture/resources/icons/x32/box_front.png');
+    expect(card.attributes).to.deep.equal([
+      {
+        "label": "Format",
+        "value": {
+          "label": "maven2"
+        }
+      },
+      {
+        "label": "Repository",
+        "value": {
+          "label": "repository"
+        }
+      }
+    ]);
   });
 });
