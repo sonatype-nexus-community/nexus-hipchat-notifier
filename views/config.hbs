@@ -16,43 +16,78 @@
 
 -->
 
-{{!< layout}}
-<form class="aui">
-  <div class="field-group">
-    <label for="node-id">Nexus Node ID<span class="aui-icon icon-required">required</span></label>
-    <input class="text" type="text" id="node-id" name="node-id" title="Node ID" value="{{nodeId}}">
-    <div class="description">Nexus Node ID available via the Node: Identity Nexus capability</div>
-  </div>
-  <div class="field-group">
-    <label for="secret-key">Secret Key</label>
-    <input class="text" type="password" id="secret-key" name="secret-key" title="Secret Key" value="{{secretKey}}">
-    <div class="description">Nexus Webhook Secret Key configurable through the Webhook capability</div>
-  </div>
-  <div class="field-group">
-    <label for="regex-filter">Regex Filter</label>
-    <input class="text" type="password" id="regex-filter" name="regex-filter" title="Regex Filter" value="{{regexFilter}}">
-    <div class="description">A regex filter to select which components or assets trigger a notification</div>
-  </div>
-  <div class="buttons-container">
-    <div class="buttons">
-      <input class="button submit" type="button" value="Save" id="save-configuration">
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{title}}</title>
+
+  <link rel="stylesheet" type="text/css" href="//aui-cdn.atlassian.com/aui-adg/6.0.0/css/aui.css"/>
+  <link rel="stylesheet" type="text/css" href="//aui-cdn.atlassian.com/aui-adg/6.0.0/css/aui-experimental.css"/>
+  <link rel="stylesheet" href="{{furl '/css/config.css'}}">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  <script src="//aui-cdn.atlassian.com/aui-adg/6.0.0/js/aui.js"></script>
+  <script src="//aui-cdn.atlassian.com/aui-adg/6.0.0/js/aui-experimental.js"></script>
+
+  <script src="//www.hipchat.com/atlassian-connect/all.js"></script>
+</head>
+<body>
+  <form id="nexus-settings-form" class="aui">
+    <div class="field-group">
+      <label for="node-id">Nexus Node ID<span class="aui-icon icon-required">required</span></label>
+      <input class="text" type="text" id="node-id" name="node-id" title="Node ID" value="{{nodeId}}">
+      <div class="description">Nexus Node ID available via the Node: Identity Nexus capability</div>
     </div>
-  </div>
-  <script>
-    $('#save-configuration').on('click', function() {
-      HipChat.auth.withToken(function(err, token) {
-        $.ajax({
-          type: 'POST',
-          url: '/config',
-          headers: {'authorization': 'JWT ' + token},
-          data: {
-            nodeId: $('#node-id').val(),
-            secretKey: $('#secret-key').val(),
-            regexFilter: $('#regex-filter').val()
-          },
-          dataType: 'json'
+    <div class="field-group">
+      <label for="secret-key">Secret Key</label>
+      <input class="text" type="password" id="secret-key" name="secret-key" title="Secret Key" value="{{secretKey}}">
+      <div class="description">Nexus Webhook Secret Key configurable through the Webhook capability</div>
+    </div>
+    <div class="field-group">
+      <label for="nexus-url">Nexus URL</label>
+      <input class="text" type="text" id="nexus-url" name="nexus-url" title="Nexus URL" value="{{nexusUrl}}"
+             data-aui-validation-field data-aui-validation-pattern="^https?://.*$"
+             data-aui-validation-pattern-msg="Should start with http or https">
+      <div class="description">Nexus Repository Manager Base URL. Used to generate links in notifications</div>
+    </div>
+    <div class="field-group">
+      <label for="regex-filter">Regex Filter</label>
+      <input class="text" type="password" id="regex-filter" name="regex-filter" title="Regex Filter"
+             value="{{regexFilter}}">
+      <div class="description">A regex filter to select which components or assets trigger a notification</div>
+    </div>
+    <div class="buttons-container">
+      <div class="buttons">
+        <input class="button submit" type="submit" value="Save" id="save-configuration">
+        <div class="button-spinner"></div>
+      </div>
+    </div>
+    <script>
+      AJS.$('#nexus-settings-form').on('aui-valid-submit', function(event) {
+        AJS.$('.button-spinner').spin();
+        HipChat.auth.withToken(function(err, token) {
+          $.ajax({
+            type: 'POST',
+            url: '/config',
+            headers: {'authorization': 'JWT ' + token},
+            data: {
+              nodeId: $('#node-id').val(),
+              secretKey: $('#secret-key').val(),
+              nexusUrl: $('#nexus-url').val(),
+              regexFilter: $('#regex-filter').val()
+            },
+            dataType: 'json',
+            complete: function() {
+              AJS.$('.button-spinner').spinStop();
+            }
+          });
         });
+        event.preventDefault();
       });
-    });
-  </script>
-</form>
+    </script>
+  </form>
+</body>
+</html>

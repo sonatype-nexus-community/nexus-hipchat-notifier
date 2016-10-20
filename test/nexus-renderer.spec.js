@@ -18,7 +18,7 @@
 
 const chai = require('chai');
 const expect = chai.expect;
-const nexusRendererCtr = require('../lib/nexus-renderer');
+const nexusRendererCtr = require('../lib/nexus/nexus-renderer');
 
 describe('nexus-renderer', function() {
   it('shouldBuildCard() returns true for component and asset lower case events', function() {
@@ -239,15 +239,17 @@ describe('nexus-renderer', function() {
     }, {
       repositoryName: 'repository',
       asset: {
+        id: 'id',
         name: 'asset-name'
       }
     });
 
-    var card = nexusRender.buildCard();
+    var card = nexusRender.buildCard('http://foo.com/');
     expect(card.id).to.equal('foo');
     expect(card.style).to.equal('application');
     expect(card.format).to.equal('medium');
     expect(card.title).to.equal('asset-name');
+    expect(card.url).to.equal('http://foo.com/#browse/browse/assets:repository:id');
     expect(card.description).to.equal('asset-name asset cached in repository');
     expect(card.icon.url).to.equal('https://sonatype.com//img/nexus-rm.png');
   });
@@ -259,6 +261,7 @@ describe('nexus-renderer', function() {
     }, {
       repositoryName: 'repository',
       component: {
+        id: 'id',
         format: 'maven2',
         group: 'group',
         name: 'artifact',
@@ -266,11 +269,12 @@ describe('nexus-renderer', function() {
       }
     });
 
-    var card = nexusRender.buildCard();
+    var card = nexusRender.buildCard('http://foo.com/');
     expect(card.id).to.equal('foo');
     expect(card.style).to.equal('application');
     expect(card.format).to.equal('medium');
     expect(card.title).to.equal('group:artifact:version');
+    expect(card.url).to.equal('http://foo.com/#browse/browse/components:repository:id');
     expect(card.description).to.equal('group:artifact:version component cached in repository');
     expect(card.icon.url).to.equal('https://sonatype.com//img/nexus-rm.png');
   });

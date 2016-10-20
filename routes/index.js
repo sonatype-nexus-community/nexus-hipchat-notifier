@@ -15,14 +15,13 @@
  */
 
 const url = require('url');
-// TODO: Worry about collisions
 const dummySecretKey = '~~DUMMY-SECRET-KEY~~';
 
 module.exports = function(app, addon) {
   const hipchat = require('../lib/hipchat')(addon);
 
   // Instantiate Nexus HipChat Addon data store
-  const nexusSettings = require('../lib/nexus-settings')(addon);
+  const nexusSettings = require('../lib/nexus/nexus-settings')(addon);
 
   /**
    * This route will serve the `atlassian-connect.json` unless a homepage URL is
@@ -77,7 +76,8 @@ module.exports = function(app, addon) {
       function(req, res) {
         const nodeId = req.body.nodeId;
         var secretKey = req.body.secretKey;
-        var regexFilter = req.body.regexFilter;
+        const nexusUrl = req.body.nexusUrl;
+        const regexFilter = req.body.regexFilter;
 
         // If dummy secret key is POSTed the user did not change the key. Replace with existing secret key.
         if (secretKey === dummySecretKey) {
@@ -86,7 +86,7 @@ module.exports = function(app, addon) {
         }
 
         // Store tenant settings by clientKey and nodeId so they can be retrieved with either context
-        nexusSettings.storeNexusClientKeyPairs(nodeId, secretKey, regexFilter, req.clientInfo.roomId,
+        nexusSettings.storeNexusClientKeyPairs(nodeId, secretKey, nexusUrl, regexFilter, req.clientInfo.roomId,
             req.clientInfo.clientKey);
         res.sendStatus(200);
       }
@@ -102,7 +102,7 @@ module.exports = function(app, addon) {
         const nodeId = body.nodeId;
 
         // Instantiate Nexus Renderer for specific Webhook request
-        var nexusRenderer = require('../lib/nexus-renderer')(addon.config.localBaseUrl(), headers, body);
+        var nexusRenderer = require('../lib/nexus/nexus-renderer')(addon.config.localBaseUrl(), headers, body);
 
         // Determine if the Webhook matches a renderable event
         if (!nexusRenderer.shouldBuildCard()) {
@@ -128,7 +128,8 @@ module.exports = function(app, addon) {
           }
 
           // Build renderable HipChat card from the Webhook event
-          var card = nexusRenderer.buildCard();
+          const nexusUrl = settings.nexusUrl;
+          var card = nexusRenderer.buildCard(nexusUrl);
 
           // Use tenant's clientKey stored by Nexus nodeId to determine where to send message
           const clientKey = settings.clientKey;
