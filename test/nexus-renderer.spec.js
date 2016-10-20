@@ -27,7 +27,7 @@ describe('nexus-renderer', function() {
       'rm:repository:component'
     ];
     buildableEvents.forEach(function(event) {
-      var nexusRender = nexusRendererCtr(undefined, {
+      var nexusRender = nexusRendererCtr({
         'x-nexus-webhook-delivery': '',
         'x-nexus-webhook-id': event
       }, {
@@ -44,7 +44,7 @@ describe('nexus-renderer', function() {
       'rm:repository:component'
     ];
     buildableEvents.forEach(function(event) {
-      var nexusRender = nexusRendererCtr(undefined, {
+      var nexusRender = nexusRendererCtr({
         'x-nexus-webhook-delivery': '',
         'x-nexus-webhook-id': event.toUpperCase()
       }, {
@@ -62,7 +62,7 @@ describe('nexus-renderer', function() {
       'iq:applicationEvaluation'
     ];
     nonBuildableEvents.forEach(function(event) {
-      var nexusRender = nexusRendererCtr(undefined, {
+      var nexusRender = nexusRendererCtr({
         'x-nexus-webhook-delivery': '',
         'x-nexus-webhook-id': event.toUpperCase()
       }, {
@@ -79,7 +79,7 @@ describe('nexus-renderer', function() {
       'deleted'
     ];
     nonBuildableActions.forEach(function(action) {
-      var nexusRender = nexusRendererCtr(undefined, {
+      var nexusRender = nexusRendererCtr({
         'x-nexus-webhook-delivery': '',
         'x-nexus-webhook-id': 'rm:repository:component'
       }, {
@@ -98,7 +98,7 @@ describe('nexus-renderer', function() {
     ];
 
     unsetRegexes.forEach(function(regex) {
-      var nexusRender = nexusRendererCtr(undefined, {
+      var nexusRender = nexusRendererCtr({
         'x-nexus-webhook-delivery': '',
         'x-nexus-webhook-id': ''
       }, {});
@@ -132,7 +132,7 @@ describe('nexus-renderer', function() {
     ];
 
     regexBodys.forEach(function(regexBody) {
-      var nexusRender = nexusRendererCtr(undefined, {
+      var nexusRender = nexusRendererCtr({
         'x-nexus-webhook-delivery': '',
         'x-nexus-webhook-id': regexBody.event
       }, regexBody.body);
@@ -166,7 +166,7 @@ describe('nexus-renderer', function() {
     ];
 
     regexBodys.forEach(function(regexBody) {
-      var nexusRender = nexusRendererCtr(undefined, {
+      var nexusRender = nexusRendererCtr({
         'x-nexus-webhook-delivery': '',
         'x-nexus-webhook-id': regexBody.event
       }, regexBody.body);
@@ -182,7 +182,7 @@ describe('nexus-renderer', function() {
     ];
 
     unsetValues.forEach(function(unsetSignature) {
-      var nexusRender = nexusRendererCtr(undefined, {
+      var nexusRender = nexusRendererCtr({
         'x-nexus-webhook-delivery': '',
         'x-nexus-webhook-signature': unsetSignature,
         'x-nexus-webhook-id': ''
@@ -201,7 +201,7 @@ describe('nexus-renderer', function() {
       null
     ];
 
-    var nexusRender = nexusRendererCtr(undefined, {
+    var nexusRender = nexusRendererCtr({
       'x-nexus-webhook-delivery': '',
       'x-nexus-webhook-signature': 'foo',
       'x-nexus-webhook-id': ''
@@ -213,7 +213,7 @@ describe('nexus-renderer', function() {
   });
 
   it('passesSecretKeyVerification() returns false when signature does not match secret digest on body', function() {
-    var nexusRender = nexusRendererCtr(undefined, {
+    var nexusRender = nexusRendererCtr({
       'x-nexus-webhook-delivery': '',
       'x-nexus-webhook-signature': 'foo',
       'x-nexus-webhook-id': ''
@@ -223,7 +223,7 @@ describe('nexus-renderer', function() {
   });
 
   it('passesSecretKeyVerification() returns false when signature matches secret digest on body', function() {
-    var nexusRender = nexusRendererCtr(undefined, {
+    var nexusRender = nexusRendererCtr({
       'x-nexus-webhook-delivery': '',
       'x-nexus-webhook-signature': '59cd0592a1a8df816ea0a8a3bfe3b01ad6895699',
       'x-nexus-webhook-id': ''
@@ -233,7 +233,7 @@ describe('nexus-renderer', function() {
   });
 
   it('buildCard() should correctly build asset cards', function() {
-    var nexusRender = nexusRendererCtr('https://sonatype.com/', {
+    var nexusRender = nexusRendererCtr({
       'x-nexus-webhook-delivery': 'foo',
       'x-nexus-webhook-id': 'rm:repository:asset'
     }, {
@@ -251,11 +251,11 @@ describe('nexus-renderer', function() {
     expect(card.title).to.equal('asset-name');
     expect(card.url).to.equal('http://foo.com/#browse/browse/assets:repository:id');
     expect(card.description).to.equal('asset-name asset cached in repository');
-    expect(card.icon.url).to.equal('https://sonatype.com//img/nexus-rm.png');
+    expect(card.icon.url).to.equal('http://foo.com/static/rapture/resources/icons/x32/page_white_stack.png');
   });
 
   it('buildCard() should correctly build component cards', function() {
-    var nexusRender = nexusRendererCtr('https://sonatype.com/', {
+    var nexusRender = nexusRendererCtr({
       'x-nexus-webhook-delivery': 'foo',
       'x-nexus-webhook-id': 'rm:repository:component'
     }, {
@@ -276,6 +276,6 @@ describe('nexus-renderer', function() {
     expect(card.title).to.equal('group:artifact:version');
     expect(card.url).to.equal('http://foo.com/#browse/browse/components:repository:id');
     expect(card.description).to.equal('group:artifact:version component cached in repository');
-    expect(card.icon.url).to.equal('https://sonatype.com//img/nexus-rm.png');
+    expect(card.icon.url).to.equal('http://foo.com/static/rapture/resources/icons/x32/box_front.png');
   });
 });

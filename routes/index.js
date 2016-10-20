@@ -102,7 +102,7 @@ module.exports = function(app, addon) {
         const nodeId = body.nodeId;
 
         // Instantiate Nexus Renderer for specific Webhook request
-        var nexusRenderer = require('../lib/nexus/nexus-renderer')(addon.config.localBaseUrl(), headers, body);
+        var nexusRenderer = require('../lib/nexus/nexus-renderer')(headers, body);
 
         // Determine if the Webhook matches a renderable event
         if (!nexusRenderer.shouldBuildCard()) {
