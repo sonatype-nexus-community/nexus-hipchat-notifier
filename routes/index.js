@@ -81,15 +81,20 @@ module.exports = function(app, addon) {
 
         // If dummy secret key is POSTed the user did not change the key. Replace with existing secret key.
         if (secretKey === dummySecretKey) {
-          var settings = nexusSettings.getFromNodeId(nodeId);
-          secretKey = settings.secretKey;
-        }
+          nexusSettings.getFromNodeId(nodeId).then(function(settings) {
+            secretKey = settings.secretKey;
 
-        // Store tenant settings by clientKey and nodeId so they can be retrieved with either context
-        nexusSettings.storeNexusClientKeyPairs(nodeId, secretKey, nexusUrl, regexFilter, req.clientInfo.roomId,
-            req.clientInfo.clientKey);
-        res.sendStatus(200);
-      }
+            // Store tenant settings by clientKey and nodeId so they can be retrieved with either context
+            nexusSettings.storeNexusClientKeyPairs(nodeId, secretKey, nexusUrl, regexFilter, req.clientInfo.roomId,
+                req.clientInfo.clientKey);
+            res.sendStatus(200);
+          });
+        } else {
+          // Store tenant settings by clientKey and nodeId so they can be retrieved with either context
+          nexusSettings.storeNexusClientKeyPairs(nodeId, secretKey, nexusUrl, regexFilter, req.clientInfo.roomId,
+              req.clientInfo.clientKey);
+          res.sendStatus(200);
+        }}
   );
 
   /**
